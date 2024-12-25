@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import { Button } from "@/components/ui/button";
-import LogoutButton from "./LogoutButton";
 import { AppSidebar } from "@/components/dashboard/app-sidebar"
 import {
   Breadcrumb,

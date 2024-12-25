@@ -192,7 +192,6 @@ const formSchema = z.object({
 export default function LoginForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -218,7 +217,7 @@ export default function LoginForm() {
         // Redirect to the dashboard page
         redirect("/dashboard");
       }
-    } catch (error) {
+    } catch (_error) {
       setServerError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false); // Set loading to false when submission ends
@@ -287,7 +286,7 @@ export default function LoginForm() {
         </CardContent>
         <CardFooter className="flex-col gap-2">
           <div className="text-muted-foreground text-sm">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/register" className="underline">
               Register
             </Link>
