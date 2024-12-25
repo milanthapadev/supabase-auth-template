@@ -173,7 +173,7 @@ import {
 } from "@/components/ui/form";
 import { passwordSchema } from "@/validation/passwordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -216,7 +216,7 @@ export default function LoginForm() {
         setServerError(response.message);
       } else {
         // Redirect to the dashboard page
-        router.push("/dashboard");
+        redirect("/dashboard");
       }
     } catch (error) {
       setServerError("An unexpected error occurred. Please try again.");

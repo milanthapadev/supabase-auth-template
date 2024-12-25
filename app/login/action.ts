@@ -71,7 +71,6 @@ export const loginUser = async ({
     user: {
       id: data.user.id,
       email: data.user.email,
-      // Add any other user data you want to return
     },
   };
 };
