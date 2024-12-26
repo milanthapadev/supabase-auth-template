@@ -32,7 +32,8 @@ export default function GoogleSignin() {
       if (error) {
         throw error;
       }
-    } catch (_error) {
+    } catch (error) {
+      console.log(error)
       toast({
         title: "Please try again.",
         description: "There was an error logging in with Google.",

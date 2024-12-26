@@ -60,7 +60,8 @@ export default function ResetPassword() {
         // Redirect to the confirmation page
         router.push("/dashboard");
       }
-    } catch (_error) {
+    } catch (error) {
+      console.log(error)
       setServerError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false); // Set loading to false when submission ends

@@ -61,7 +61,8 @@ export default function ForgotPassword() {
         // Redirect to the dashboard page
         router.push("/forgot-password/confirmation");
       }
-    } catch (_error) {
+    } catch (error){
+      console.log(error)
       setServerError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false); // Set loading to false when submission ends
