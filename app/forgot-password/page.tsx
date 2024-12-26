@@ -22,7 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { forgotPassword } from "./action";
@@ -31,7 +31,7 @@ const formSchema = z.object({
   email: z.string().email(),
 });
 
-export default function ForgotPassword() {
+function ForgotPasswordForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -129,5 +129,21 @@ export default function ForgotPassword() {
         </CardFooter>
       </Card>
     </main>
+  );
+}
+
+export default function ForgotPassword() {
+  return (
+    <Suspense fallback={
+      <main className="flex justify-center items-center min-h-screen">
+        <Card className="w-[380px]">
+          <CardContent className="flex justify-center p-6">
+            <Loader2 className="h-6 w-6 animate-spin" />
+          </CardContent>
+        </Card>
+      </main>
+    }>
+      <ForgotPasswordForm />
+    </Suspense>
   );
 }
