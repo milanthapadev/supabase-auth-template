@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { passwordSchema } from "@/validation/passwordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect, useRouter } from "next/navigation";
+import { redirect} from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
