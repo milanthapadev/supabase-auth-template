@@ -12,7 +12,9 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  Link
 } from "lucide-react"
+import { User } from '@supabase/supabase-js'
 
 import { NavMain } from "@/components/dashboard/nav-main"
 import { NavProjects } from "@/components/dashboard/nav-projects"
@@ -35,9 +37,9 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      name: "XOTO Links",
+      logo: Link,
+      plan: "Free Version",
     },
     {
       name: "Acme Corp.",
@@ -157,16 +159,10 @@ const data = {
 }
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  userEmail?: string;
+  user?: User | null;
 }
 
-export function AppSidebar({ userEmail, ...props }: AppSidebarProps) {
-  const userObject = {
-    name: userEmail?.split('@')[0] || 'User',
-    email: userEmail || '',
-    avatar: '/avatars/default.jpg'
-  }
-
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -177,7 +173,7 @@ export function AppSidebar({ userEmail, ...props }: AppSidebarProps) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={userObject} />
+        <NavUser user={user}/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
