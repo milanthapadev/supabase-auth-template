@@ -1,6 +1,7 @@
 "use client";
 
-import type { User } from '@supabase/supabase-js'
+import { useEffect, useState } from "react";
+import type { User } from "@supabase/supabase-js";
 import {
   BadgeCheck,
   Bell,
@@ -28,15 +29,30 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/app/dashboard/action";
 import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
 
-export async function NavUser({ user }: { user?: User | null }) {
+export function NavUser({ user }: { user?: User | null }) {
   const { isMobile } = useSidebar();
   const supabase = createClient();
-  const { data, error, status } = await supabase
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function getProfile() {
+      if (!user?.id) return;
+
+      const { data } = await supabase
         .from("profiles")
         .select(`username`)
-        .eq("id", user?.id)
+        .eq("id", user.id)
         .single();
+
+      if (data) {
+        setUsername(data.username);
+      }
+    }
+
+    getProfile();
+  }, [user, supabase]);
 
   return (
     <SidebarMenu>
@@ -52,7 +68,7 @@ export async function NavUser({ user }: { user?: User | null }) {
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{data?.username}</span>
+                <span className="truncate font-semibold">{username}</span>
                 <span className="truncate text-xs">{user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -71,7 +87,7 @@ export async function NavUser({ user }: { user?: User | null }) {
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{data?.username}</span>
+                  <span className="truncate font-semibold">{username}</span>
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
@@ -87,12 +103,14 @@ export async function NavUser({ user }: { user?: User | null }) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="gap-2 p-2">
-                <div className="flex size-6 items-center justify-center rounded-sm border">
-                  <BadgeCheck className="size-4 shrink-0" />
-                </div>
-                Account
-              </DropdownMenuItem>
+              <Link href={"/dashboard/account"}>
+                <DropdownMenuItem className="gap-2 p-2">
+                  <div className="flex size-6 items-center justify-center rounded-sm border">
+                    <BadgeCheck className="size-4 shrink-0" />
+                  </div>
+                  Account
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem className="gap-2 p-2">
                 <div className="flex size-6 items-center justify-center rounded-sm border">
                   <CreditCard className="size-4 shrink-0" />

@@ -10,6 +10,8 @@ import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { logout } from "../action";
 import Avatar from "@/components/dashboard/account/avatar";
+import { useToast } from "@/hooks/use-toast"
+
 
 export default function AccountForm({ user }: { user: User | null }) {
   const supabase = createClient();
@@ -19,6 +21,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast()
 
   const getProfile = useCallback(async () => {
     try {
@@ -85,7 +88,9 @@ export default function AccountForm({ user }: { user: User | null }) {
       });
 
       if (error) throw error;
-      alert("Profile updated successfully!");
+      toast({
+        title: "Profile updated successfully!",
+      })
     } catch (error) {
       console.error("Error updating profile:", error);
       setError("Failed to update profile. Please try again later.");
